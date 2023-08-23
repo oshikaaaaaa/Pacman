@@ -1,3 +1,69 @@
+#include <SFML/Graphics.hpp>
+#include <iostream>
+
+/*
+const int WINDOW_WIDTH = 672;
+const int WINDOW_HEIGHT = 800;
+const int NUM_FRAMES = 2;  // Number of frames in your snowfall animation
+
+int main() {
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Snowfall Animation");
+
+    sf::Sprite sprite;
+    sf::Texture texture;
+
+    if (!texture.loadFromFile("Resources/Images/snow.png")) {
+        std::cout << "Cannot load snow texture." << std::endl;
+
+    }
+
+    int currentFrame = 0;
+    sf::Clock frameClock;
+    float frameDuration = 0.4f;  // Duration of each frame in seconds
+
+    sprite.setTexture(texture);
+    sprite.setTextureRect(sf::IntRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+
+    float snowYPosition = 0.0f;
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
+
+        window.clear(sf::Color::Black);
+
+        // Check if it's time to switch frames
+        if (frameClock.getElapsedTime().asSeconds() >= frameDuration) {
+            currentFrame = (currentFrame + 1) % NUM_FRAMES;
+            sprite.setTextureRect(sf::IntRect(currentFrame * WINDOW_WIDTH, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+            frameClock.restart();
+        }
+        snowYPosition += 0.f; // You can adjust the speed here
+
+        // Reset snowfall position after it goes beyond the window height
+        if (snowYPosition > WINDOW_HEIGHT) {
+            snowYPosition = 0.0f;  // Start from the top again
+        }
+
+        sprite.setPosition(0.0f, snowYPosition);
+        window.draw(sprite);
+
+        // Draw the sprite at the previous position
+        sprite.setPosition(0.0f, snowYPosition - WINDOW_HEIGHT);
+        window.draw(sprite);
+
+        window.display();
+    }
+
+    return 0;
+}
+
+*/
+
+
 #include <array>
 #include <chrono>
 #include <ctime>
@@ -21,16 +87,16 @@
 #include "SnowAnimation.h"
 #include <iostream>
 
-
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
+/* /
+ const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 672;
 
 
 
 
 const int SNOW_EFFECT_DELAY = 20; // 3 minutes in seconds
 const int SNOW_EFFECT_DURATION = 10;
-const int NUM_SNOWFLAKES = 0;
+const int NUM_SNOWFLAKES = 2;
 
 
 enum class GameState {
@@ -90,10 +156,7 @@ int main()
     //window.setView(sf::View(sf::FloatRect(0, -CELL_SIZE * 2, CELL_SIZE * (MAP_WIDTH), FONT_HEIGHT + CELL_SIZE * (MAP_HEIGHT + 3))));
     MainMenu mainMenu(window);
     a = mainMenu.draw();
-    if (a == 2) {
-        Howtoplay howtoplay;
-        b = howtoplay.show();
-    }
+
     if (b == 1) {
         a = mainMenu.draw();
     }
@@ -104,8 +167,8 @@ int main()
 
         window.setView(sf::View(sf::FloatRect(0, -CELL_SIZE * 2, CELL_SIZE * (MAP_WIDTH), FONT_HEIGHT + CELL_SIZE * (MAP_HEIGHT + 3))));
         window.setFramerateLimit(60);
+        SnowfallAnimation snowfallAnimation(WINDOW_WIDTH, WINDOW_HEIGHT, "Resources/Images/snow.png");
 
-        SnowAnimation snowAnimation(WINDOW_WIDTH, WINDOW_HEIGHT, NUM_SNOWFLAKES);
         sf::Music music;
 
 
@@ -137,7 +200,7 @@ int main()
 
         }
         window.setFramerateLimit(60);
-
+        
 
         while (window.isOpen())
         {
@@ -172,15 +235,9 @@ int main()
                 window.clear(sf::Color::Black);
 
                 if (snow_animation_active) {
-                    // snowAnimation.update(1.0f / 60.0f); // Pass the elapsed time
-                    // snowAnimation.draw(window);
-                    draw_map(map, window);
+                    snowfallAnimation.update(0.016f); // You can adjust the delta time here
+                    snowfallAnimation.draw(window);
 
-                    pacman.draw(game_won, window, freeze);
-                    pacman.update(level, map, delta_time, freeze);
-                    ghost_manager.draw(true, window, freeze);
-                    ghost_manager.update(level, map, pacman);
-                    std::cout << " >>" << delta_time << std::endl;
                     window.display();
                     window.clear();
 
@@ -193,13 +250,13 @@ int main()
                     }
 
                 }
-                else
-                {
-                    waitingClock.restart();
+                
+               
+                   \
                     // ... (Your game logic and collision detection code)
 
 
-
+                else {
 
                     if (startState == GameStartState::WaitingForKeyPress && music.getStatus() == sf::SoundSource::Stopped) {
                         // ... (Your waiting for keypress code)
@@ -366,7 +423,7 @@ int main()
 
                     }
                 }
-
+                
                 window.display();
 
             }
@@ -376,3 +433,4 @@ int main()
 
     return 0;
 }
+*/

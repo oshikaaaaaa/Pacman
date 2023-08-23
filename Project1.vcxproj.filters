@@ -66,6 +66,9 @@
     <ClCompile Include="test1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SnowLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConvertSketch.h">
@@ -102,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SnowAnimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

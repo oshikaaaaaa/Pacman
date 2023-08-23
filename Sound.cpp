@@ -52,9 +52,6 @@ void SoundManager:: Dead(){
 void SoundManager::eatGhost() {
    
     Ghost.play();
-    
-
-
 }
 
 void SoundManager::playIntro() {

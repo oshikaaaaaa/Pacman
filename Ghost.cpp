@@ -394,7 +394,7 @@ void Ghost::update(unsigned char i_level, std::array<std::array<Cell, MAP_HEIGHT
 	// After handling collisions for the current frame
 	// Reset the flag to allow for future collisions
 	int s = i_pacman.Score();
-	std::cout << s;
+	
 	if(1 == pacman_collision(i_pacman.get_position()) )
 	{
 		

@@ -32,6 +32,7 @@
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="rain.cpp" />
     <ClCompile Include="SnowAnimation.cpp" />
+    <ClCompile Include="SnowLayer.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="test.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="MapCollision.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="SnowAnimation.h" />
+    <ClInclude Include="SnowLayer.h" />
     <ClInclude Include="Sound.h" />
   </ItemGroup>
   <ItemGroup>

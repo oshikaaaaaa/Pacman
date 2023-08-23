@@ -14,9 +14,7 @@ SoundManager Sound;
 
 using namespace std;
 
-
-
-
+int value = 10;
 Pacman::Pacman() :
 	animation_over(0),
 	dead(0),
@@ -33,18 +31,18 @@ Pacman::Pacman() :
 {
 	//I just realized that I already explained everything in the Ghost class.
 	//And I don't like to repeat myself.
-	
+
 	ifstream inputFile("highScore.txt");
 	if (!inputFile.is_open()) {
 		cout << "Error opening the file." << endl;
-		
+
 	}
 	else {
 		inputFile >> highScore;
-		
+
 	}
 	inputFile.close();
-	
+
 }
 
 
@@ -112,7 +110,7 @@ void Pacman::pacman_sprite(sf::RenderWindow& i_window) {
 	sf::Sprite sprite;
 	sf::Texture texture;
 	sprite.setPosition(initialPosition.x, initialPosition.y);
-	if (!texture.loadFromFile("Resources/Images/PacmanDeath" + std::to_string(CELL_SIZE) + ".png", sf::IntRect(0,0,16,16)))
+	if (!texture.loadFromFile("Resources/Images/PacmanDeath" + std::to_string(CELL_SIZE) + ".png", sf::IntRect(0, 0, 16, 16)))
 	{
 		std::cout << "cannot load pacman file";
 	}
@@ -120,7 +118,7 @@ void Pacman::pacman_sprite(sf::RenderWindow& i_window) {
 
 	sprite.setTexture(texture);
 	i_window.draw(sprite);
-	
+
 
 }
 
@@ -133,7 +131,7 @@ void Pacman::draw(bool i_victory, sf::RenderWindow& i_window, bool frozen)
 
 	sprite.setPosition(position.x, position.y);
 	/*if (frozen) {
-		
+
 		// Draw frozen Pac-Man sprite
 		sf::Sprite sprite;
 		sf::Texture texture;
@@ -143,16 +141,16 @@ void Pacman::draw(bool i_victory, sf::RenderWindow& i_window, bool frozen)
 		texture.loadFromFile("Resources/Images/Pacman" + std::to_string(CELL_SIZE) + ".png"); // Replace with the path to your frozen Pac-Man sprite
 		sprite.setTexture(texture);
 		sprite.setTextureRect(sf::IntRect(0, 0, CELL_SIZE, CELL_SIZE));;
-		
-		
+
+
 		i_window.draw(sprite);
-	
+
 	}
 	*/
 
-	
 
-	 if (1 == dead || 1 == i_victory)
+
+	if (1 == dead || 1 == i_victory)
 	{
 		if (animation_timer < PACMAN_DEATH_FRAMES * PACMAN_ANIMATION_SPEED)
 		{
@@ -210,7 +208,7 @@ void Pacman::reset()
 	energizer_timer = 0;
 	position.x = initialPosition.x;
 	position.y = initialPosition.y;
-	
+
 
 }
 
@@ -235,7 +233,7 @@ void Pacman::set_position(short i_x, short i_y)
 	position = { i_x, i_y };
 }
 
-void Pacman::update(unsigned char i_level, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map, unsigned delta_time,bool freeze)
+void Pacman::update(unsigned char i_level, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map, unsigned delta_time, bool freeze)
 {
 
 	std::array<bool, 4> walls{};
@@ -244,45 +242,43 @@ void Pacman::update(unsigned char i_level, std::array<std::array<Cell, MAP_HEIGH
 	walls[2] = map_collision(0, 0, position.x - PACMAN_SPEED, position.y, i_map, *this);
 	walls[3] = map_collision(0, 0, position.x, PACMAN_SPEED + position.y, i_map, *this);
 
-		
 
 
-		if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+
+	if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		if (0 == walls[0]) //You can't turn in this direction if there's a wall there.
 		{
-			if (0 == walls[0]) //You can't turn in this direction if there's a wall there.
-			{
-				direction = 0;
-			}
+			direction = 0;
+		}
+	}
+
+	if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		if (0 == walls[1])
+		{
+			direction = 1;
+		}
+	}
+
+	if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		if (0 == walls[2])
+		{
+			direction = 2;
+		}
+	}
+
+
+	if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		if (0 == walls[3])
+		{
+			direction = 3;
 		}
 
-		if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			if (0 == walls[1])
-			{
-				direction = 1;
-			}
-		}
 
-		if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			if (0 == walls[2])
-			{
-				direction = 2;
-			}
-		}
-
-
-		if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			if (0 == walls[3])
-			{
-				direction = 3;
-			}
-
-
-		}
-	
-
+	}
 
 
 
@@ -312,10 +308,10 @@ void Pacman::update(unsigned char i_level, std::array<std::array<Cell, MAP_HEIGH
 		}
 
 	}
-		
 
 
-	
+
+
 
 
 	if (0 == walls[direction])
@@ -362,7 +358,7 @@ void Pacman::update(unsigned char i_level, std::array<std::array<Cell, MAP_HEIGH
 	{
 		//He becomes energized!
 		energizer_timer = static_cast<unsigned short>(ENERGIZER_DURATION / pow(2, i_level));
-		
+
 		Sound.eatGhost();
 	}
 	else
@@ -371,12 +367,13 @@ void Pacman::update(unsigned char i_level, std::array<std::array<Cell, MAP_HEIGH
 	}
 }
 
+
 Position Pacman::get_position()
 {
 	return position;
 }
 
-int& Pacman:: Score(){
+int& Pacman::Score() {
 	return score;
 }
 
@@ -385,10 +382,10 @@ int& Pacman::Score(int x) {
 	return score;
 }
 
-int Pacman:: updateHighScore(int x) {
+int Pacman::updateHighScore(int x) {
 	highScore = x;
 	return highScore;
-	
+
 }
 
 int Pacman::getHighScore() {
@@ -400,3 +397,312 @@ void Pacman::getS() {
 	cout << s;
 }
 
+void Pacman::snowupdate(unsigned char i_level, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map, unsigned delta_time, bool freeze)
+{
+
+	std::array<bool, 4> walls{};
+	walls[0] = map_collision(0, 0, PACMAN_SPEED + position.x, position.y, i_map, *this);
+	walls[1] = map_collision(0, 0, position.x, position.y - PACMAN_SPEED, i_map, *this);
+	walls[2] = map_collision(0, 0, position.x - PACMAN_SPEED, position.y, i_map, *this);
+	walls[3] = map_collision(0, 0, position.x, PACMAN_SPEED + position.y, i_map, *this);
+
+
+
+
+
+	if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		if (0 == walls[0]) //You can't turn in this direction if there's a wall there.
+		{
+			direction = 0;
+			j = 0;
+		}
+	}
+
+	if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		if (0 == walls[1])
+		{
+			direction = 1;
+			j = 0;
+		}
+	}
+
+	if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		if (0 == walls[2])
+		{
+			direction = 2;
+			j = 0;
+		}
+	}
+
+
+	if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		if (0 == walls[3])
+		{
+			direction = 3;
+			j = 0;
+		}
+
+
+	}
+
+
+	short ground_y = position.y;
+	while (!map_collision(false, false, position.x, ground_y + 1, i_map, *this))
+	{
+		ground_y++;
+	}
+	if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !jumping) {
+		jumping = true;
+		verticalVelocity = jumpForce;
+	}
+
+	// Jumping logic
+	if (jumping) {
+		// Update vertical velocity due to gravity
+		verticalVelocity += GRAVITY * delta_time;
+
+		// Update position based on vertical velocity
+		//position.y += verticalVelocity;
+
+		// Check for collision with ground
+		if (position.y >= ground_y) {
+			position.y = ground_y;
+			jumping = false;
+			verticalVelocity = 0.0f;
+		}
+
+	}
+
+
+	/*/if (walls[0]) cout << "right ";
+	if (walls[1]) cout << "up ";
+	if (walls[2]) cout << "left ";
+	if (walls[3]) cout << "down \n";
+	*/
+
+
+
+	if (0 == walls[direction])
+	{
+		switch (direction)
+		{
+		case 0:
+		{
+			if (j == value || previous_direction == 1 || previous_direction == 3)
+			{
+
+				position.x += PACMAN_SPEED;
+				previous_direction = 0;
+				j = value;
+
+			}
+			else
+			{
+				if (previous_direction == 0)
+				{
+					if (!walls[0])
+						position.x += PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+
+				if (previous_direction == 1)
+				{
+					if (!walls[1]) {
+						position.y -= PACMAN_SPEED;
+						
+					}
+
+					else
+						j = value - 1;
+				}
+
+				if (previous_direction == 2)
+				{
+					if (!walls[2])
+						position.x -= PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+				if (previous_direction == 3)
+				{
+					if (!walls[3])
+						position.y += PACMAN_SPEED;
+					else
+						j = 9;
+				}
+
+
+				j++;
+
+			}
+
+			break;
+		}
+		case 1:
+		{
+
+			if (j == value || previous_direction == 0 || previous_direction == 2)
+			{
+
+				position.y -= PACMAN_SPEED;
+				previous_direction = 1;
+				j = value;
+			}
+
+			else
+			{
+				if (previous_direction == 0)
+				{
+					if (!walls[0])
+						position.x += PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+
+				if (previous_direction == 1)
+				{
+					if (!walls[1])
+						position.y -= PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+				if (previous_direction == 2)
+				{
+					if (!walls[2])
+						position.x -= PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+				if (previous_direction == 3)
+				{
+					if (!walls[3])
+						position.y += PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+				j++;
+			}
+			break;
+		}
+		case 2:
+		{
+
+
+			if (j == value || previous_direction == 1 || previous_direction == 3)
+			{
+
+				position.x -= PACMAN_SPEED;
+				previous_direction = 2;
+				j = value;
+
+			}
+
+			else
+			{
+				if (previous_direction == 0)
+				{
+					if (!walls[0])
+						position.x += PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+
+				if (previous_direction == 1)
+				{
+					if (!walls[1])
+						position.y -= PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+				if (previous_direction == 2)
+				{
+					if (!walls[2])
+						position.x -= PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+				if (previous_direction == 3)
+				{
+					if (!walls[3])
+						position.y += PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+				j++;
+
+			}
+
+			break;
+		}
+		case 3:
+		{
+			if (j == value || previous_direction == 0 || previous_direction == 2)
+			{
+
+				position.y += PACMAN_SPEED;
+				previous_direction = 3;
+				j = value;
+
+			}
+
+
+
+			else
+			{
+				if (previous_direction == 0)
+				{
+					if (!walls[0])
+						position.x += PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+
+				if (previous_direction == 1)
+				{
+					if (!walls[1])
+						position.y -= PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+				if (previous_direction == 2)
+				{
+					if (!walls[2])
+						position.x -= PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+				if (previous_direction == 3)
+				{
+					if (!walls[3])
+						position.y += PACMAN_SPEED;
+					else
+						j = value - 1;
+				}
+
+				j++;
+
+			}
+
+		}
+
+
+		}
+	}
+}

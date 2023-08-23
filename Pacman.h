@@ -12,6 +12,7 @@ class Pacman
 	unsigned char direction;
 	int score;
 	int highScore;
+	int value = 20;
 	//More timers!
 	unsigned short animation_timer;
 	unsigned short energizer_timer;
@@ -21,6 +22,8 @@ class Pacman
 	float jumpForce;
 	float verticalVelocity;
 	bool freeze;
+	int j = 0;
+	int previous_direction = 0;
 
 	//Current location of this creature, commonly known as Pacman.
 	Position position;
@@ -41,6 +44,7 @@ public:
 	void set_dead(bool i_dead);
 	void set_position(short i_x, short i_y);
 	void update(unsigned char i_level, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map, unsigned delta_time, bool freeze);
+	void snowupdate(unsigned char i_level, std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map, unsigned delta_time, bool freeze);
 	bool is_death_animation_over() const;
 	void draw_death_animation(sf::RenderWindow& window);
 	void pacman_sprite(sf::RenderWindow& i_window);
