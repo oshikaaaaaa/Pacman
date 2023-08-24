@@ -279,7 +279,13 @@ int main()
 
                 if (snow_animation_active && !game_won) {
 
-                    sf::Sprite snowman(snowmanTexture);
+                    sf::Font font;
+                    if (!font.loadFromFile("static/arial.ttf")) {
+                        std::cout << "Failed to load font" << std::endl;
+                    }
+                    sf::Text Text("It's snow timee", font, 10);
+                    
+                   // Text.setFillColor(sf::Color:white);
                     
                     sf::Sprite overlaySprite(overlayTexture);
                     auto elapsed_snow_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - start_snow_time).count();
