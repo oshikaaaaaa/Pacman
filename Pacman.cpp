@@ -515,7 +515,7 @@ void Pacman::snowupdate(unsigned char i_level, std::array<std::array<Cell, MAP_H
 				{
 					if (!walls[1]) {
 						position.y -= PACMAN_SPEED;
-						
+
 					}
 
 					else
@@ -704,5 +704,25 @@ void Pacman::snowupdate(unsigned char i_level, std::array<std::array<Cell, MAP_H
 
 
 		}
+	}
+	if (-CELL_SIZE >= position.x)
+	{
+		position.x = CELL_SIZE * MAP_WIDTH - PACMAN_SPEED;
+	}
+	else if (CELL_SIZE * MAP_WIDTH <= position.x)
+	{
+		position.x = PACMAN_SPEED - CELL_SIZE;
+	}
+
+	if (1 == map_collision(1, 0, position.x, position.y, i_map, *this)) //When Pacman eats an energizer...
+	{
+		//He becomes energized!
+		energizer_timer = static_cast<unsigned short>(ENERGIZER_DURATION / pow(2, i_level));
+
+		Sound.eatGhost();
+	}
+	else
+	{
+		energizer_timer = std::max(0, energizer_timer - 1);
 	}
 }

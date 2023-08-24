@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="ConvertSketch.cpp" />
     <ClCompile Include="DrawMap.cpp" />
+    <ClCompile Include="drawmodes.cpp" />
     <ClCompile Include="DrawText.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GhostManager.cpp" />
